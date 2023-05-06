@@ -49,6 +49,19 @@ func (r Repo) GetUserFromID(id int) (User, error) {
 	return user, nil
 }
 
+func (r Repo) GetBook(id int) (Book, error) {
+	row := r.db.QueryRow("SELECT id, name, price, is_published FROM book WHERE id = ?", id)
+	if row.Err() != nil {
+		return Book{}, row.Err()
+	}
+	var book Book
+	scanErr := row.Scan(&book.ID, &book.Name, &book.Price, &book.IsPublished)
+	if scanErr != nil {
+		return Book{}, scanErr
+	}
+	return book, nil
+}
+
 func (r Repo) BookList() ([]Book, error) {
 	rows, err := r.db.Query("SELECT id, name, price, is_published FROM book")
 	if err != nil {
