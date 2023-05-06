@@ -23,6 +23,8 @@ type MinimalBookResponse struct {
 }
 
 type FullBookResponse struct {
-	MinimalBookResponse
-	IsPublished bool `json:"is_published"`
+	ID          int     `json:"id"`
+	Name        string  `json:"name"`
+	Price       float32 `json:"price"`
+	IsPublished bool    `json:"is_published"`
 }
