@@ -32,6 +32,7 @@ func (s Server) Run() {
 
 	bookRoute := e.Group("/book", middleware.Auth(s.UserSrv, s.AuthSrv))
 	bookRoute.GET("/", s.BookList)
+	bookRoute.GET("/:id", s.GetBook)
 	bookRoute.POST("/", s.CreateBook, middleware.LoginRequired())
 	bookRoute.PUT("/:id", s.UpdateBook, middleware.LoginRequired(), middleware.AdminRequired())
 	bookRoute.DELETE("/:id", s.DeleteBook, middleware.LoginRequired(), middleware.AdminRequired())
@@ -69,6 +70,38 @@ func (s Server) Login(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, echo.Map{"error": "server error"})
 	}
 	return c.JSON(http.StatusOK, echo.Map{"token": jwt})
+}
+
+func (s Server) GetBook(c echo.Context) error {
+	id, convErr := strconv.Atoi(c.Param("id"))
+	if convErr != nil {
+		return c.JSON(http.StatusBadRequest, echo.Map{"error": "invalid id"})
+	}
+
+	bookFromDB, err := s.BookSrv.GetBook(id)
+	if err != nil {
+		log.Println("GET BOOK HANDLER - GET BOOK SERVICE ERR", err)
+		return c.JSON(http.StatusNotFound, echo.Map{"error": "couldn't get book"})
+	}
+	if !httpUtils.IsAuthenticated(c) || !httpUtils.IsAdmin(c) {
+		if !bookFromDB.IsPublished {
+			return c.JSON(http.StatusNotFound, echo.Map{"error": "book not found"})
+		}
+		responseBook := param.MinimalBookResponse{
+			ID:    bookFromDB.ID,
+			Name:  bookFromDB.Name,
+			Price: bookFromDB.Price,
+		}
+		return c.JSON(http.StatusOK, echo.Map{"book": responseBook})
+	}
+
+	responseBook := param.FullBookResponse{
+		ID:          bookFromDB.ID,
+		Name:        bookFromDB.Name,
+		Price:       bookFromDB.Price,
+		IsPublished: bookFromDB.IsPublished,
+	}
+	return c.JSON(http.StatusOK, echo.Map{"book": responseBook})
 }
 
 func (s Server) BookList(c echo.Context) error {
