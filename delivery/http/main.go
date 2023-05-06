@@ -95,6 +95,9 @@ func (s Server) CreateBook(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, echo.Map{"error": "invalid data"})
 	}
 
+	if !IsAdmin(c) {
+		bookCreateRequest.IsPublished = false
+	}
 	createdBook, createErr := s.BookSrv.CreateBook(bookCreateRequest)
 	if createErr != nil {
 		log.Println("CREATE BOOK HANDLER CREATE SERVICE ERR", createErr)
