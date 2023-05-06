@@ -1,0 +1,704 @@
+{
+	"info": {
+		"_postman_id": "76cb2418-534e-4d8d-8630-6d10a33bb443",
+		"name": "Assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7250373"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@gmail.com\",\n    \"password\": \"123\"\n}\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "admin user jwt",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@gmail.com\",\n    \"password\": \"123\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 06 May 2023 19:54:30 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "106"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjF9.8PVjh8cdZkKWJzqO4OyenNT8KqlgRLgQmEfHJEaX464\"\n}"
+				},
+				{
+					"name": "normal user jwt",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test2@gmail.com\",\n    \"password\": \"123\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 06 May 2023 19:55:07 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "106"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjJ9.AV1HbM0F8Kskm620G5qtNFWWarBi_bhFyiI-ahOdnVs\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Book",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjF9.8PVjh8cdZkKWJzqO4OyenNT8KqlgRLgQmEfHJEaX464",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/book/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"book",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "admin user - get published book",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjF9.8PVjh8cdZkKWJzqO4OyenNT8KqlgRLgQmEfHJEaX464",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/book/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 06 May 2023 19:55:47 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "81"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"book\": {\n        \"id\": 1,\n        \"name\": \"Go development book\",\n        \"price\": 50.99,\n        \"is_published\": true\n    }\n}"
+				},
+				{
+					"name": "admin user - get unpublished book",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjF9.8PVjh8cdZkKWJzqO4OyenNT8KqlgRLgQmEfHJEaX464",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/book/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"2"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 06 May 2023 19:56:20 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "88"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"book\": {\n        \"id\": 2,\n        \"name\": \"Go development book Vol.2\",\n        \"price\": 50.99,\n        \"is_published\": false\n    }\n}"
+				},
+				{
+					"name": "normal user - get published book",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjJ9.AV1HbM0F8Kskm620G5qtNFWWarBi_bhFyiI-ahOdnVs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/book/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 06 May 2023 19:56:51 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "61"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"book\": {\n        \"id\": 1,\n        \"name\": \"Go development book\",\n        \"price\": 50.99\n    }\n}"
+				},
+				{
+					"name": "normal user - get unpublished book",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjJ9.AV1HbM0F8Kskm620G5qtNFWWarBi_bhFyiI-ahOdnVs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/book/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"2"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 06 May 2023 19:57:11 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "27"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"book not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Book list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjF9.8PVjh8cdZkKWJzqO4OyenNT8KqlgRLgQmEfHJEaX464",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/book/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"book",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "admin user - all books",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjF9.8PVjh8cdZkKWJzqO4OyenNT8KqlgRLgQmEfHJEaX464",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/book/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 06 May 2023 17:37:29 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "163"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"books\": [\n        {\n            \"id\": 1,\n            \"name\": \"Go development book\",\n            \"price\": 50.99,\n            \"is_published\": true\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Go development book Vol.2\",\n            \"price\": 50.99,\n            \"is_published\": false\n        }\n    ]\n}"
+				},
+				{
+					"name": "normal user - just published",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjF9.8PVjh8cdZkKWJzqO4OyenNT8KqlgRLgQmEfHJEaX464",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/book/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 06 May 2023 17:37:53 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "64"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"books\": [\n        {\n            \"id\": 1,\n            \"name\": \"Go development book\",\n            \"price\": 50.99\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Book",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjF9.8PVjh8cdZkKWJzqO4OyenNT8KqlgRLgQmEfHJEaX464",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"A new book 2\", \n    \"price\": 34.44,\n    \"is_published\": true\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/book/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"book",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "not logged in",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjF9.8PVjh8cdZkKWJzqO4OyenNT8KqlgRLgQmEfHJEaX464",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"A new book 2\", \n    \"price\": 34.44,\n    \"is_published\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								""
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 06 May 2023 19:58:42 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "26"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"access denied\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Book",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjJ9.AV1HbM0F8Kskm620G5qtNFWWarBi_bhFyiI-ahOdnVs",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"A new book2\", \n    \"price\": -2,\n    \"is_published\": true\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/book/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"book",
+						"2"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "normal user",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjJ9.AV1HbM0F8Kskm620G5qtNFWWarBi_bhFyiI-ahOdnVs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"A new book2\", \n    \"price\": -2,\n    \"is_published\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"2"
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 06 May 2023 20:00:33 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "26"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"access denied\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete Book",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjJ9.AV1HbM0F8Kskm620G5qtNFWWarBi_bhFyiI-ahOdnVs",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/book/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"book",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "normal user",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjJ9.AV1HbM0F8Kskm620G5qtNFWWarBi_bhFyiI-ahOdnVs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/book/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"1"
+							]
+						}
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 06 May 2023 20:00:12 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "26"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"access denied\"\n}"
+				}
+			]
+		}
+	]
+}
