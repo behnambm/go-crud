@@ -9,6 +9,7 @@ import (
 const (
 	IsAuthenticatedKey = "IsAuthenticated"
 	CurrentUserKey     = "CurrentUser"
+	IsAdminKey         = "IsAdmin"
 )
 
 func Auth(userSrv user.Service, authSrv auth.Service) echo.MiddlewareFunc {
@@ -26,6 +27,7 @@ func Auth(userSrv user.Service, authSrv auth.Service) echo.MiddlewareFunc {
 						if userErr == nil {
 							isAuthenticated = true
 							c.Set(CurrentUserKey, currentUser)
+							c.Set(IsAdminKey, currentUser.IsAdmin)
 						}
 					}
 				}
