@@ -79,6 +79,23 @@ func (r Repo) BookList() ([]Book, error) {
 	return bookList, nil
 }
 
+func (r Repo) PublishedBookList() ([]Book, error) {
+	rows, err := r.db.Query("SELECT id, name, price, is_published FROM book WHERE is_published = true")
+	if err != nil {
+		return nil, err
+	}
+	var bookList []Book
+	for rows.Next() {
+		book := Book{}
+		err = rows.Scan(&book.ID, &book.Name, &book.Price, &book.IsPublished)
+		if err != nil {
+			log.Println("PUBLISHED BOOK LIST ERR", err)
+		}
+		bookList = append(bookList, book)
+	}
+	return bookList, nil
+}
+
 func (r Repo) CreateBook(name string, price float32, isPublished bool) (Book, error) {
 	res, execErr := r.db.Exec("INSERT INTO book (name, price, is_published) VALUES (?, ?, ?)", name, price, isPublished)
 	if execErr != nil {
