@@ -11,6 +11,20 @@ type Service struct {
 	repo *sqlite.Repo
 }
 
+func (s Service) GetBook(bookId int) (Book, error) {
+	bookFromDB, getErr := s.repo.GetBook(bookId)
+	if getErr != nil {
+		log.Println("GET BOOK SERVICE ERR", getErr)
+		return Book{}, fmt.Errorf("couldn't get book %d", bookId)
+	}
+	return Book{
+		ID:          bookFromDB.ID,
+		Name:        bookFromDB.Name,
+		Price:       bookFromDB.Price,
+		IsPublished: bookFromDB.IsPublished,
+	}, nil
+}
+
 func New(repo *sqlite.Repo) Service {
 	return Service{
 		repo: repo,
