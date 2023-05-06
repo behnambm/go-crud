@@ -7,6 +7,7 @@ import (
 	"github.com/behnambm/assignment/service/book"
 	"github.com/behnambm/assignment/service/user"
 	"github.com/behnambm/assignment/utils/hash"
+	httpUtils "github.com/behnambm/assignment/utils/http"
 	"github.com/labstack/echo"
 	echoMiddleware "github.com/labstack/echo/middleware"
 	"log"
@@ -32,8 +33,8 @@ func (s Server) Run() {
 	bookRoute := e.Group("/book", middleware.Auth(s.UserSrv, s.AuthSrv))
 	bookRoute.GET("/", s.BookList)
 	bookRoute.POST("/", s.CreateBook, middleware.LoginRequired())
-	bookRoute.PUT("/:id", s.UpdateBook, middleware.LoginRequired())
-	bookRoute.DELETE("/:id", s.DeleteBook, middleware.LoginRequired())
+	bookRoute.PUT("/:id", s.UpdateBook, middleware.LoginRequired(), middleware.AdminRequired())
+	bookRoute.DELETE("/:id", s.DeleteBook, middleware.LoginRequired(), middleware.AdminRequired())
 
 	e.Logger.Fatal(e.Start(s.ListenAddr))
 }
@@ -71,7 +72,7 @@ func (s Server) Login(c echo.Context) error {
 }
 
 func (s Server) BookList(c echo.Context) error {
-	if !IsAuthenticated(c) || !IsAdmin(c) {
+	if !httpUtils.IsAuthenticated(c) || !httpUtils.IsAdmin(c) {
 		books, err := s.BookSrv.PublishedBookList()
 		if err != nil {
 			log.Println("PUBLISHED BOOK LIST HANDLER ERR", err)
@@ -95,7 +96,7 @@ func (s Server) CreateBook(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, echo.Map{"error": "invalid data"})
 	}
 
-	if !IsAdmin(c) {
+	if !httpUtils.IsAdmin(c) {
 		bookCreateRequest.IsPublished = false
 	}
 	createdBook, createErr := s.BookSrv.CreateBook(bookCreateRequest)

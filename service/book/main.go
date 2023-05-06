@@ -92,19 +92,18 @@ func (s Service) UpdateBook(bookId int, param param.BookUpdateRequest) (Book, er
 		return Book{}, fmt.Errorf("couldn't update book")
 	}
 
-	// if the user is admin then use the FullBookResponse
 	return Book{
-		ID:    bookFromDB.ID,
-		Name:  bookFromDB.Name,
-		Price: bookFromDB.Price,
+		ID:          bookFromDB.ID,
+		Name:        bookFromDB.Name,
+		Price:       bookFromDB.Price,
+		IsPublished: bookFromDB.IsPublished,
 	}, nil
 }
 
 func (s Service) DeleteBook(bookId int) error {
-	// check if the user is admin then allow to delete the book
 	if deleteErr := s.repo.DeleteBook(bookId); deleteErr != nil {
 		log.Println("BOOK DELETE SERVICE ERR", deleteErr)
-		return fmt.Errorf("couldn't delete the book")
+		return fmt.Errorf("couldn't find or delete the book")
 	}
 	return nil
 }
