@@ -7,7 +7,8 @@ type User struct {
 }
 
 type Book struct {
-	ID    int
-	Name  string
-	Price float32
+	ID          int
+	Name        string
+	Price       float32
+	IsPublished bool
 }

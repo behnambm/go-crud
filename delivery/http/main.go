@@ -8,6 +8,7 @@ import (
 	"github.com/behnambm/assignment/service/user"
 	"github.com/behnambm/assignment/utils/hash"
 	"github.com/labstack/echo"
+	echoMiddleware "github.com/labstack/echo/middleware"
 	"log"
 	"net/http"
 	"strconv"
@@ -22,15 +23,17 @@ type Server struct {
 
 func (s Server) Run() {
 	e := echo.New()
+	e.Use(echoMiddleware.Recover())
+	e.Use(echoMiddleware.Logger())
 
 	authRoute := e.Group("/auth")
 	authRoute.POST("/login", s.Login)
 
 	bookRoute := e.Group("/book")
 	bookRoute.GET("/", s.BookList)
-	bookRoute.POST("/", s.CreateBook, middleware.JWT(s.UserSrv, s.AuthSrv))
-	bookRoute.PUT("/:id", s.UpdateBook, middleware.JWT(s.UserSrv, s.AuthSrv))
-	bookRoute.DELETE("/:id", s.DeleteBook, middleware.JWT(s.UserSrv, s.AuthSrv))
+	bookRoute.POST("/", s.CreateBook, middleware.Auth(s.UserSrv, s.AuthSrv))
+	bookRoute.PUT("/:id", s.UpdateBook, middleware.Auth(s.UserSrv, s.AuthSrv))
+	bookRoute.DELETE("/:id", s.DeleteBook, middleware.Auth(s.UserSrv, s.AuthSrv))
 
 	e.Logger.Fatal(e.Start(s.ListenAddr))
 }
@@ -61,7 +64,7 @@ func (s Server) Login(c echo.Context) error {
 	jwt, jwtErr := s.AuthSrv.GenerateJWT(userData.ID)
 
 	if jwtErr != nil {
-		log.Println("LOGIN HANDLER JWT GENERATE ERR", jwtErr)
+		log.Println("LOGIN HANDLER Auth GENERATE ERR", jwtErr)
 		return c.JSON(http.StatusInternalServerError, echo.Map{"error": "server error"})
 	}
 	return c.JSON(http.StatusOK, echo.Map{"token": jwt})

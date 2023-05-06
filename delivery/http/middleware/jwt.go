@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func JWT(userSrv user.Service, authSrv auth.Service) echo.MiddlewareFunc {
+func Auth(userSrv user.Service, authSrv auth.Service) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			authHeader := c.Request().Header.Get("Authorization")

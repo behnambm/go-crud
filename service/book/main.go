@@ -24,37 +24,46 @@ func (s Service) BookList() ([]Book, error) {
 		return []Book{}, fmt.Errorf("couldn't get list of books")
 	}
 
+	// if the user is admin then use the FullBookResponse
 	var books []Book
 	for _, book := range booksFromDB {
 		books = append(books, Book{
-			ID:    book.ID,
-			Name:  book.Name,
-			Price: book.Price,
+			ID:          book.ID,
+			Name:        book.Name,
+			Price:       book.Price,
+			IsPublished: book.IsPublished,
 		})
 	}
 	return books, nil
 }
 
 func (s Service) CreateBook(param param.BookCreateRequest) (Book, error) {
-	bookFromDB, createErr := s.repo.CreateBook(param.Name, param.Price)
+	// check if the user is admin and the IsPublished is true then allow it otherwise make it not published
+	bookFromDB, createErr := s.repo.CreateBook(param.Name, param.Price, param.IsPublished)
 	if createErr != nil {
 		log.Println("BOOK CREATE SERVICE ERR", createErr)
 		return Book{}, fmt.Errorf("couldn't create book")
 	}
 
+	// if the user is admin then use the FullBookResponse
 	return Book{
-		ID:    bookFromDB.ID,
-		Name:  bookFromDB.Name,
-		Price: bookFromDB.Price,
+		ID:          bookFromDB.ID,
+		Name:        bookFromDB.Name,
+		Price:       bookFromDB.Price,
+		IsPublished: bookFromDB.IsPublished,
 	}, nil
 }
+
 func (s Service) UpdateBook(bookId int, param param.BookUpdateRequest) (Book, error) {
-	bookFromDB, updateErr := s.repo.UpdateBook(bookId, param.Name, param.Price)
+	// check if the user is admin or not and then change the value of `isPublished` accordingly
+	// check if the user is admin and the IsPublished is true then allow it otherwise make it not published
+	bookFromDB, updateErr := s.repo.UpdateBook(bookId, param.Name, param.Price, param.IsPublished)
 	if updateErr != nil {
 		log.Println("BOOK UPDATE SERVICE ERR", updateErr)
 		return Book{}, fmt.Errorf("couldn't update book")
 	}
 
+	// if the user is admin then use the FullBookResponse
 	return Book{
 		ID:    bookFromDB.ID,
 		Name:  bookFromDB.Name,
@@ -63,6 +72,7 @@ func (s Service) UpdateBook(bookId int, param param.BookUpdateRequest) (Book, er
 }
 
 func (s Service) DeleteBook(bookId int) error {
+	// check if the user is admin then allow to delete the book
 	if deleteErr := s.repo.DeleteBook(bookId); deleteErr != nil {
 		log.Println("BOOK DELETE SERVICE ERR", deleteErr)
 		return fmt.Errorf("couldn't delete the book")

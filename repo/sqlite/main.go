@@ -44,13 +44,15 @@ func CreateTables(repo *Repo) error {
 	CREATE TABLE IF NOT EXISTS book (
 	    id INTEGER PRIMARY KEY AUTOINCREMENT, 
 	    name VARCHAR(255) NOT NULL UNIQUE,
-	   	price REAL
+	   	price REAL,
+	    is_published BOOLEAN NOT NULL
 	)
 	`
 	_, err = repo.db.Exec(bookTable)
 	if err != nil {
 		return fmt.Errorf("book table err %w", err)
 	}
+	log.Println("DATABASE CREATED")
 	return nil
 }
 
@@ -64,7 +66,11 @@ func SeedTables(repo *Repo) {
 	if err != nil {
 		panic(err)
 	}
-	_, err = repo.db.Exec("INSERT INTO book (name, price) VALUES ('Go development book', 50.99)")
+	_, err = repo.db.Exec("INSERT INTO book (name, price, is_published) VALUES ('Go development book', 50.99, 1)")
+	if err != nil {
+		panic(err)
+	}
+	_, err = repo.db.Exec("INSERT INTO book (name, price, is_published) VALUES ('Go development book Vol.2', 50.99, 0)")
 	if err != nil {
 		panic(err)
 	}
@@ -97,14 +103,14 @@ func (r Repo) GetUserFromID(id int) (User, error) {
 }
 
 func (r Repo) BookList() ([]Book, error) {
-	rows, err := r.db.Query("SELECT * FROM book")
+	rows, err := r.db.Query("SELECT id, name, price, is_published FROM book")
 	if err != nil {
 		return nil, err
 	}
 	var bookList []Book
 	for rows.Next() {
 		book := Book{}
-		err = rows.Scan(&book.ID, &book.Name, &book.Price)
+		err = rows.Scan(&book.ID, &book.Name, &book.Price, &book.IsPublished)
 		if err != nil {
 			log.Println("BOOK LIST ERR", err)
 		}
@@ -113,8 +119,8 @@ func (r Repo) BookList() ([]Book, error) {
 	return bookList, nil
 }
 
-func (r Repo) CreateBook(name string, price float32) (Book, error) {
-	res, execErr := r.db.Exec("INSERT INTO book (name, price) VALUES (?, ?)", name, price)
+func (r Repo) CreateBook(name string, price float32, isPublished bool) (Book, error) {
+	res, execErr := r.db.Exec("INSERT INTO book (name, price, is_published) VALUES (?, ?, ?)", name, price, isPublished)
 	if execErr != nil {
 		return Book{}, execErr
 	}
@@ -123,14 +129,18 @@ func (r Repo) CreateBook(name string, price float32) (Book, error) {
 		return Book{}, err
 	}
 	return Book{
-		ID:    int(id),
-		Name:  name,
-		Price: price,
+		ID:          int(id),
+		Name:        name,
+		Price:       price,
+		IsPublished: isPublished,
 	}, nil
 }
 
-func (r Repo) UpdateBook(id int, name string, price float32) (Book, error) {
-	res, execErr := r.db.Exec("UPDATE book SET name = ?, price = ? WHERE id = ?", name, price, id)
+func (r Repo) UpdateBook(id int, name string, price float32, isPublished bool) (Book, error) {
+	res, execErr := r.db.Exec(
+		"UPDATE book SET name = ?, price = ?, is_published = ? WHERE id = ?",
+		name, price, isPublished, id,
+	)
 	if execErr != nil {
 		return Book{}, execErr
 	}
@@ -142,9 +152,10 @@ func (r Repo) UpdateBook(id int, name string, price float32) (Book, error) {
 		return Book{}, fmt.Errorf("couldn't update the book")
 	}
 	return Book{
-		ID:    int(id),
-		Name:  name,
-		Price: price,
+		ID:          int(id),
+		Name:        name,
+		Price:       price,
+		IsPublished: isPublished,
 	}, nil
 }
 
