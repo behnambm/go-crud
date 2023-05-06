@@ -17,21 +17,38 @@ func New(repo *sqlite.Repo) Service {
 	}
 }
 
-func (s Service) BookList() ([]Book, error) {
+func (s Service) BookList() ([]param.FullBookResponse, error) {
 	booksFromDB, err := s.repo.BookList()
 	if err != nil {
 		log.Println("BOOK LIST SERVICE ERR", err)
-		return []Book{}, fmt.Errorf("couldn't get list of books")
+		return []param.FullBookResponse{}, fmt.Errorf("couldn't get list of books")
 	}
 
-	// if the user is admin then use the FullBookResponse
-	var books []Book
+	var books []param.FullBookResponse
 	for _, book := range booksFromDB {
-		books = append(books, Book{
+		books = append(books, param.FullBookResponse{
 			ID:          book.ID,
 			Name:        book.Name,
 			Price:       book.Price,
 			IsPublished: book.IsPublished,
+		})
+	}
+	return books, nil
+}
+
+func (s Service) PublishedBookList() ([]param.MinimalBookResponse, error) {
+	booksFromDB, err := s.repo.PublishedBookList()
+	if err != nil {
+		log.Println("PUBLISHED BOOK LIST SERVICE ERR", err)
+		return []param.MinimalBookResponse{}, fmt.Errorf("couldn't get list of books")
+	}
+
+	var books []param.MinimalBookResponse
+	for _, book := range booksFromDB {
+		books = append(books, param.MinimalBookResponse{
+			ID:    book.ID,
+			Name:  book.Name,
+			Price: book.Price,
 		})
 	}
 	return books, nil
@@ -55,8 +72,6 @@ func (s Service) CreateBook(param param.BookCreateRequest) (Book, error) {
 }
 
 func (s Service) UpdateBook(bookId int, param param.BookUpdateRequest) (Book, error) {
-	// check if the user is admin or not and then change the value of `isPublished` accordingly
-	// check if the user is admin and the IsPublished is true then allow it otherwise make it not published
 	bookFromDB, updateErr := s.repo.UpdateBook(bookId, param.Name, param.Price, param.IsPublished)
 	if updateErr != nil {
 		log.Println("BOOK UPDATE SERVICE ERR", updateErr)

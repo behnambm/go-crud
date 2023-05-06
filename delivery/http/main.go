@@ -71,6 +71,15 @@ func (s Server) Login(c echo.Context) error {
 }
 
 func (s Server) BookList(c echo.Context) error {
+	if !IsAuthenticated(c) || !IsAdmin(c) {
+		books, err := s.BookSrv.PublishedBookList()
+		if err != nil {
+			log.Println("PUBLISHED BOOK LIST HANDLER ERR", err)
+			return c.JSON(http.StatusNotFound, echo.Map{"error": "couldn't get list of books"})
+		}
+		return c.JSON(http.StatusOK, echo.Map{"books": books})
+	}
+
 	books, err := s.BookSrv.BookList()
 	if err != nil {
 		log.Println("BOOK LIST HANDLER ERR", err)
