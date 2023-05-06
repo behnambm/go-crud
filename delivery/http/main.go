@@ -29,11 +29,11 @@ func (s Server) Run() {
 	authRoute := e.Group("/auth")
 	authRoute.POST("/login", s.Login)
 
-	bookRoute := e.Group("/book")
+	bookRoute := e.Group("/book", middleware.Auth(s.UserSrv, s.AuthSrv))
 	bookRoute.GET("/", s.BookList)
-	bookRoute.POST("/", s.CreateBook, middleware.Auth(s.UserSrv, s.AuthSrv))
-	bookRoute.PUT("/:id", s.UpdateBook, middleware.Auth(s.UserSrv, s.AuthSrv))
-	bookRoute.DELETE("/:id", s.DeleteBook, middleware.Auth(s.UserSrv, s.AuthSrv))
+	bookRoute.POST("/", s.CreateBook, middleware.LoginRequired())
+	bookRoute.PUT("/:id", s.UpdateBook, middleware.LoginRequired())
+	bookRoute.DELETE("/:id", s.DeleteBook, middleware.LoginRequired())
 
 	e.Logger.Fatal(e.Start(s.ListenAddr))
 }
