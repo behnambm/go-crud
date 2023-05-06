@@ -1,12 +1,12 @@
 package http
 
 import (
-	"github.com/behnambm/assignment/delivery/http/middleware"
+	"github.com/behnambm/assignment/constants"
 	"github.com/labstack/echo"
 )
 
 func IsAuthenticated(c echo.Context) bool {
-	authenticated, ok := c.Get(middleware.IsAuthenticatedKey).(bool)
+	authenticated, ok := c.Get(constants.IsAuthenticatedKey).(bool)
 	if !ok {
 		return false
 	}
@@ -14,7 +14,7 @@ func IsAuthenticated(c echo.Context) bool {
 }
 
 func IsAdmin(c echo.Context) bool {
-	isAdmin, ok := c.Get(middleware.IsAdminKey).(bool)
+	isAdmin, ok := c.Get(constants.IsAdminKey).(bool)
 	if !ok {
 		return false
 	}

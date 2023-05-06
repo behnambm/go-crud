@@ -1,15 +1,10 @@
 package middleware
 
 import (
+	"github.com/behnambm/assignment/constants"
 	"github.com/behnambm/assignment/service/auth"
 	"github.com/behnambm/assignment/service/user"
 	"github.com/labstack/echo"
-)
-
-const (
-	IsAuthenticatedKey = "IsAuthenticated"
-	CurrentUserKey     = "CurrentUser"
-	IsAdminKey         = "IsAdmin"
 )
 
 func Auth(userSrv user.Service, authSrv auth.Service) echo.MiddlewareFunc {
@@ -26,13 +21,13 @@ func Auth(userSrv user.Service, authSrv auth.Service) echo.MiddlewareFunc {
 						currentUser, userErr := userSrv.GetUserFromID(int(uid))
 						if userErr == nil {
 							isAuthenticated = true
-							c.Set(CurrentUserKey, currentUser)
-							c.Set(IsAdminKey, currentUser.IsAdmin)
+							c.Set(constants.CurrentUserKey, currentUser)
+							c.Set(constants.IsAdminKey, currentUser.IsAdmin)
 						}
 					}
 				}
 			}
-			c.Set(IsAuthenticatedKey, isAuthenticated)
+			c.Set(constants.IsAuthenticatedKey, isAuthenticated)
 
 			return next(c)
 		}
