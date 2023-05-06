@@ -3,9 +3,9 @@ package sqlite
 import (
 	"database/sql"
 	"fmt"
+	_ "github.com/mattn/go-sqlite3"
 	"log"
 )
-import _ "github.com/mattn/go-sqlite3"
 
 type Repo struct {
 	db *sql.DB
@@ -31,7 +31,7 @@ func (r Repo) GetUserFromEmail(email string) (User, error) {
 		return User{}, row.Err()
 	}
 	user := User{}
-	if err := row.Scan(&user.ID, &user.Email, &user.Password); err != nil {
+	if err := row.Scan(&user.ID, &user.Email, &user.Password, &user.IsAdmin); err != nil {
 		return User{}, err
 	}
 	return user, nil
@@ -43,7 +43,7 @@ func (r Repo) GetUserFromID(id int) (User, error) {
 		return User{}, row.Err()
 	}
 	user := User{}
-	if err := row.Scan(&user.ID, &user.Email, &user.Password); err != nil {
+	if err := row.Scan(&user.ID, &user.Email, &user.Password, &user.IsAdmin); err != nil {
 		return User{}, err
 	}
 	return user, nil

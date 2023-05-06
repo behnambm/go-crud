@@ -4,6 +4,7 @@ type User struct {
 	ID       int
 	Email    string
 	Password string
+	IsAdmin  bool
 }
 
 type Book struct {

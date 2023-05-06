@@ -13,7 +13,8 @@ func CreateTables(repo *Repo) error {
 	CREATE TABLE IF NOT EXISTS user (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		email VARCHAR(255) UNIQUE,
-	    password VARCHAR(255) NOT NULL
+	    password VARCHAR(255) NOT NULL,
+	    is_admin BOOLEAN NOT NULL
 	)
 	`
 	_, err := repo.db.Exec(userTable)
@@ -42,10 +43,20 @@ func SeedTables(repo *Repo) {
 	if hashErr != nil {
 		panic(hashErr)
 	}
-	_, err := repo.db.Exec("INSERT INTO user (email, password) VALUES (?, ?)", userEmail, passwordHash)
+	_, err := repo.db.Exec("INSERT INTO user (email, password, is_admin) VALUES (?, ?, 1)", userEmail, passwordHash)
 	if err != nil {
 		panic(err)
 	}
+	userEmail = "test2@gmail.com"
+	passwordHash, hashErr = hash.String("123")
+	if hashErr != nil {
+		panic(hashErr)
+	}
+	_, err = repo.db.Exec("INSERT INTO user (email, password, is_admin) VALUES (?, ?, 0)", userEmail, passwordHash)
+	if err != nil {
+		panic(err)
+	}
+
 	_, err = repo.db.Exec("INSERT INTO book (name, price, is_published) VALUES ('Go development book', 50.99, 1)")
 	if err != nil {
 		panic(err)
