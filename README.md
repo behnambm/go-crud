@@ -1,5 +1,10 @@
 ### RUN
 
+#### run tests
+```bash
+make test 
+```
+
 #### Create and seed the database
 ```bash
 make init
