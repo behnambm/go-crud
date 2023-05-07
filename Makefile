@@ -7,3 +7,5 @@ init: build
 run: build
 	@./bin/app.out
 
+test:
+	@go test ./...
