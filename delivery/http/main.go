@@ -50,7 +50,7 @@ func (s Server) Login(c echo.Context) error {
 	userData, err := s.UserSrv.GetUserFromEmail(loginRequest.Email)
 	if err != nil {
 		log.Println("LOGIN HANDLER FETCH USER ERR", err)
-		return c.JSON(http.StatusNotFound, echo.Map{"error": "invalid credentials"})
+		return c.JSON(http.StatusForbidden, echo.Map{"error": "invalid credentials"})
 	}
 
 	hashedPassword, hashErr := hash.String(loginRequest.Password)
