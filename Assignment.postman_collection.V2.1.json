@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "76cb2418-534e-4d8d-8630-6d10a33bb443",
-		"name": "Assignment",
+		"name": "go-crud",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "7250373"
 	},
