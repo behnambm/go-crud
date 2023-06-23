@@ -1,0 +1,109 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This document will provide information about using this API",
+        "title": "Go CRUD API SPEC",
+        "contact": {
+            "name": "Behnam Mohammadzadeh",
+            "url": "https://blog.behnambm.ir/",
+            "email": "behnam.mohamadzadeh21@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "host": "http://localhost:8080",
+    "basePath": "/swagger",
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    }
+                ],
+                "description": "Using this route you can authenticate and get the JWT token if provided credentials are valid",
+                "consumes": [
+                    "application/json",
+                    "text/xml"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login the user",
+                "parameters": [
+                    {
+                        "description": "query params",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/param.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Token field contains JWT token",
+                        "schema": {
+                            "$ref": "#/definitions/param.LoginOKResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "invalid data",
+                        "schema": {
+                            "$ref": "#/definitions/param.BadRequestResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "invalid credentials",
+                        "schema": {
+                            "$ref": "#/definitions/param.BadRequestResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "server error",
+                        "schema": {
+                            "$ref": "#/definitions/param.BadRequestResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "param.BadRequestResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "param.LoginOKResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "param.LoginRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BasicAuth": {
+            "type": "basic"
+        }
+    }
+}

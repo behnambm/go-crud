@@ -1,0 +1,71 @@
+basePath: /swagger
+definitions:
+  param.BadRequestResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  param.LoginOKResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  param.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+host: http://localhost:8080
+info:
+  contact:
+    email: behnam.mohamadzadeh21@gmail.com
+    name: Behnam Mohammadzadeh
+    url: https://blog.behnambm.ir/
+  description: This document will provide information about using this API
+  title: Go CRUD API SPEC
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      - text/xml
+      description: Using this route you can authenticate and get the JWT token if
+        provided credentials are valid
+      parameters:
+      - description: query params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/param.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Token field contains JWT token
+          schema:
+            $ref: '#/definitions/param.LoginOKResponse'
+        "400":
+          description: invalid data
+          schema:
+            $ref: '#/definitions/param.BadRequestResponse'
+        "403":
+          description: invalid credentials
+          schema:
+            $ref: '#/definitions/param.BadRequestResponse'
+        "500":
+          description: server error
+          schema:
+            $ref: '#/definitions/param.BadRequestResponse'
+      security:
+      - BasicAuth: []
+      summary: Login the user
+      tags:
+      - Auth
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

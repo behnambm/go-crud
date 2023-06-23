@@ -7,6 +7,7 @@ import (
 	"github.com/behnambm/go-crud/service/auth"
 	"github.com/behnambm/go-crud/service/book"
 	"github.com/behnambm/go-crud/service/user"
+	_ "github.com/swaggo/echo-swagger"
 )
 
 func main() {
