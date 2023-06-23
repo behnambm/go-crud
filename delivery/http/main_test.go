@@ -2,10 +2,10 @@ package http
 
 import (
 	"encoding/json"
-	"github.com/behnambm/assignment/repo/sqlite"
-	"github.com/behnambm/assignment/service/auth"
-	"github.com/behnambm/assignment/service/book"
-	"github.com/behnambm/assignment/service/user"
+	"github.com/behnambm/go-crud/repo/sqlite"
+	"github.com/behnambm/go-crud/service/auth"
+	"github.com/behnambm/go-crud/service/book"
+	"github.com/behnambm/go-crud/service/user"
 	"github.com/labstack/echo"
 	"io"
 	netHttp "net/http"

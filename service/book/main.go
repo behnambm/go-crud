@@ -2,8 +2,8 @@ package book
 
 import (
 	"fmt"
-	"github.com/behnambm/assignment/param"
-	"github.com/behnambm/assignment/repo/sqlite"
+	"github.com/behnambm/go-crud/param"
+	"github.com/behnambm/go-crud/repo/sqlite"
 	"log"
 )
 

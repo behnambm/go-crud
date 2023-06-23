@@ -2,7 +2,7 @@ package sqlite
 
 import (
 	"fmt"
-	"github.com/behnambm/assignment/utils/hash"
+	"github.com/behnambm/go-crud/utils/hash"
 	"log"
 )
 

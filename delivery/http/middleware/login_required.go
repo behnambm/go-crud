@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"github.com/behnambm/assignment/constants"
+	"github.com/behnambm/go-crud/constants"
 	"github.com/labstack/echo"
 	"net/http"
 )

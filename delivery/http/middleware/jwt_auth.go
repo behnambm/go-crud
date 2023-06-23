@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"github.com/behnambm/assignment/constants"
-	"github.com/behnambm/assignment/service/auth"
-	"github.com/behnambm/assignment/service/user"
+	"github.com/behnambm/go-crud/constants"
+	"github.com/behnambm/go-crud/service/auth"
+	"github.com/behnambm/go-crud/service/user"
 	"github.com/labstack/echo"
 )
 

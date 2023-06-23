@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	deliveryHttp "github.com/behnambm/assignment/utils/http"
+	deliveryHttp "github.com/behnambm/go-crud/utils/http"
 	"github.com/labstack/echo"
 	"net/http"
 )

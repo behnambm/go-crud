@@ -2,7 +2,7 @@ package user
 
 import (
 	"fmt"
-	"github.com/behnambm/assignment/repo/sqlite"
+	"github.com/behnambm/go-crud/repo/sqlite"
 	"log"
 )
 
