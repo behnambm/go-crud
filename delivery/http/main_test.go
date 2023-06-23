@@ -6,7 +6,7 @@ import (
 	"github.com/behnambm/go-crud/service/auth"
 	"github.com/behnambm/go-crud/service/book"
 	"github.com/behnambm/go-crud/service/user"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"io"
 	netHttp "net/http"
 	"net/http/httptest"

@@ -2,7 +2,7 @@ package middleware
 
 import (
 	deliveryHttp "github.com/behnambm/go-crud/utils/http"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"net/http"
 )
 

@@ -4,7 +4,7 @@ import (
 	"github.com/behnambm/go-crud/constants"
 	"github.com/behnambm/go-crud/service/auth"
 	"github.com/behnambm/go-crud/service/user"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 func Auth(userSrv user.Service, authSrv auth.Service) echo.MiddlewareFunc {

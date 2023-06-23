@@ -2,7 +2,7 @@ package http
 
 import (
 	"github.com/behnambm/go-crud/constants"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 func IsAuthenticated(c echo.Context) bool {
