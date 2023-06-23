@@ -28,3 +28,11 @@ type FullBookResponse struct {
 	Price       float32 `json:"price"`
 	IsPublished bool    `json:"is_published"`
 }
+
+type BadRequestResponse struct {
+	Error string `json:"error"`
+}
+
+type LoginOKResponse struct {
+	Token string `json:"token"`
+}
