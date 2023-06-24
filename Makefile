@@ -4,11 +4,11 @@ build:
 init: build
 	@./bin/app.out --initdb
 
-run: build doc
+run: doc build
 	@./bin/app.out
 
 test:
 	@go test ./...
 
 doc:
-	@swag init -g delivery/http//main.go --output delivery/http/docs
+	@swag init -g delivery/http/main.go --output delivery/http/docs
