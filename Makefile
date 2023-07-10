@@ -12,3 +12,10 @@ test:
 
 doc:
 	@swag init -g delivery/http/main.go --output delivery/http/docs
+
+docker-build: build
+	@docker build -t b/book:latest .
+
+up: docker-build
+	@docker compose up
+
